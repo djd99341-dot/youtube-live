@@ -1,23 +1,15 @@
-name: 24/7 Best Lofi Stream
-
+name: Lofi
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 */6 * * *'
-
 jobs:
   stream:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Install FFmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
-
-      - name: Start Non-Stop Lofi
+      - uses: actions/checkout@v2
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Start
         run: |
           ffmpeg -re -i "https://stream.zeno.fm/0r0xa792kwzuv" \
-          -vcodec libx264 -preset veryfast -maxrate 3000k -bufsize 6000k \
-          -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k -ar 44100 \
-          -f flv "rtmp://a.rtmp.youtube.com/live2/${{ secrets.YOUTUBE_STREAM_KEY }}"
+          -c:v libx264 -preset veryfast -b:v 2500k \
+          -c:a aac -ar 44100 -f flv \
+          "rtmp://a.rtmp.youtube.com/live2/${{ secrets.YOUTUBE_STREAM_KEY }}"
