@@ -6,10 +6,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install
+      - name: Install FFmpeg
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
-      - name: Start
+      - name: Start Stream
         run: |
           ffmpeg -re -i "https://stream.zeno.fm/0r0xa792kwzuv" \
           -c:v libx264 -preset veryfast -b:v 2500k -f flv \
           "rtmp://a.rtmp.youtube.com/live2/${{ secrets.YOUTUBE_STREAM_KEY }}"
+          
