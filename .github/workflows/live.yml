@@ -7,7 +7,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: sudo apt-get update && sudo apt-get install -y ffmpeg
-      - run: |
-          ffmpeg -re -i "https://stream.zeno.fm/0r0xa792kwzuv" \
-          -c:v libx264 -preset veryfast -b:v 2500k -f flv \
-          "rtmp://a.rtmp.youtube.com/live2/${{ secrets.YOUTUBE_STREAM_KEY }}"
+      - run: ffmpeg -re -i "https://stream.zeno.fm/0r0xa792kwzuv" -c:v libx264 -preset veryfast -b:v 2500k -f flv "rtmp://a.rtmp.youtube.com/live2/${{ secrets.YOUTUBE_STREAM_KEY }}"
